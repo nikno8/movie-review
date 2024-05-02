@@ -2,9 +2,10 @@
 
 package com.nikno8.movies.services;
 
-import com.nikno8.movies.Movie;
-import com.nikno8.movies.Review;
+import com.nikno8.movies.entities.Movie;
+import com.nikno8.movies.entities.Review;
 import com.nikno8.movies.repositories.ReviewRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -21,10 +22,7 @@ public class ReviewService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-//    public Review createReview(String reviewBody, int rating, String imdbId) {
-//        Review review = new Review(reviewBody, rating, imdbId); // Ensure constructor or setter methods are correct
-//        return reviewRepository.save(review);
-//    }
+
     public Review createReview(String reviewBody, int rating, String imdbId) {
         // Create and save the review
         Review review = new Review(reviewBody, rating, imdbId);
@@ -38,6 +36,15 @@ public class ReviewService {
         );
 
         return review;
+    }
+
+    public void deleteReview(ObjectId reviewId) {
+        reviewRepository.deleteById(reviewId);
+        mongoTemplate.updateMulti(
+                new Query(),
+                new Update().pull("reviewIds", reviewId),
+                Movie.class
+        );
     }
 
     public List<Review> getReviewsByImdbId(String imdbId) {

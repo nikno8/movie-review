@@ -26,7 +26,7 @@
 //        this.rating = rating;
 //    }
 //}
-package com.nikno8.movies;
+package com.nikno8.movies.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

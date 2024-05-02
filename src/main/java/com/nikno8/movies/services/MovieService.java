@@ -1,8 +1,7 @@
 package com.nikno8.movies.services;
 
-import com.nikno8.movies.Movie;
+import com.nikno8.movies.entities.Movie;
 import com.nikno8.movies.repositories.MovieRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

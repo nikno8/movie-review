@@ -1,4 +1,4 @@
-package com.nikno8.movies;
+package com.nikno8.movies.config;
 
 
 import org.springframework.context.annotation.Configuration;
