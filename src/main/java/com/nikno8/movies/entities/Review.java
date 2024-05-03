@@ -30,6 +30,7 @@ package com.nikno8.movies.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -55,5 +56,9 @@ public class Review {
 
     public Review(String body) {
         this.body = body;
+    }
+
+    public String getId() {
+        return id.toHexString();
     }
 }

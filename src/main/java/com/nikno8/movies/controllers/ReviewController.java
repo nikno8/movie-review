@@ -50,8 +50,10 @@ public class ReviewController {
 
     @DeleteMapping("/{reviewId}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Void> deleteReview(@PathVariable ObjectId reviewId) {
-        reviewService.deleteReview(reviewId);
+    public ResponseEntity<Void> deleteReview(@PathVariable String reviewId) {
+        System.out.println("Received request to delete review with ID: " + reviewId);
+        ObjectId objectId = new ObjectId(reviewId);  // Convert the string to ObjectId
+        reviewService.deleteReview(objectId);
         return ResponseEntity.ok().build();
     }
 }

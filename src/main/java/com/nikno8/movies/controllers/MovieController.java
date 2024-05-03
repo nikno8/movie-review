@@ -14,6 +14,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/v1/movies")
+@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 public class MovieController {
     @Autowired
     private MovieService movieService;
