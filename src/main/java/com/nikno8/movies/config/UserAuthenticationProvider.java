@@ -44,6 +44,7 @@ public class UserAuthenticationProvider {
                 .withSubject(user.getLogin())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
+                .withClaim("userId", user.getId().toString())  // Добавить userId в JWT
                 .withClaim("firstName", user.getFirstName())
                 .withClaim("lastName", user.getLastName())
                 .withClaim("role", user.getRole().name())

@@ -3,6 +3,7 @@ package com.nikno8.movies.mappers;
 import com.nikno8.movies.dtos.SignUpDto;
 import com.nikno8.movies.dtos.UserDto;
 import com.nikno8.movies.entities.User;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 
 @Component

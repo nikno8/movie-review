@@ -9,6 +9,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,4 +25,9 @@ public class User {
     private String login;
     private String password;
     private Role role;
+    private List<String> watchList; // Список идентификаторов фильмов
+
+//    public String getId(){
+//        return id.toHexString();
+//    }
 }
