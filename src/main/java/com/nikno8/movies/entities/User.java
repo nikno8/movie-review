@@ -27,7 +27,7 @@ public class User {
     private Role role;
     private List<String> watchList; // Список идентификаторов фильмов
 
-//    public String getId(){
-//        return id.toHexString();
-//    }
+    public String getStringId(){
+        return id.toHexString();
+    }
 }

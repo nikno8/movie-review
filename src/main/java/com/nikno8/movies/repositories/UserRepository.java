@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserRepository extends MongoRepository<User, ObjectId> {
 
     Optional<User> findByLogin(String login);
+    Long deleteByLogin(String login);
 }

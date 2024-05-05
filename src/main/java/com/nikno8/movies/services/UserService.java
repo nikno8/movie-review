@@ -10,11 +10,13 @@ import com.nikno8.movies.exceptions.AppException;
 import com.nikno8.movies.mappers.UserMapper;
 import com.nikno8.movies.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -59,4 +61,15 @@ public class UserService {
         return userMapper.toUserDto(user);
     }
 
+    public boolean deleteUser(String login) {
+        if (userRepository.findByLogin(login).get().getRole().equals(Role.ADMIN)) {
+            return false;
+        }
+        userRepository.deleteByLogin(login);
+        return true;
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
 }
