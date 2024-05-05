@@ -26,6 +26,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    @DeleteMapping("/{userId}/watchlist/{movieId}")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<?> removeMovieFromWatchlist(@PathVariable String userId, @PathVariable String movieId) {
+        if (watchlistService.removeMovieFromWatchlist(userId, movieId)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
     @GetMapping("/{userId}/watchlist")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<List<Movie>> getWatchlist(@PathVariable String userId) {

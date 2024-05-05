@@ -6,6 +6,7 @@ import com.nikno8.movies.repositories.MovieRepository;
 import com.nikno8.movies.repositories.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,13 +23,13 @@ public class WatchlistService {
     private MovieRepository movieRepository;
 
     public boolean addMovieToWatchlist(String userId, String movieId) {
-        Optional<User> userOpt = userRepository.findById(new ObjectId(userId));
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            List<String> watchList = user.getWatchList();
-            if (watchList == null) {
-                watchList = new ArrayList<>();
-            }
+        User user = userRepository.findById(new ObjectId(userId))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        List<String> watchList = user.getWatchList();
+        if (watchList == null) {
+            watchList = new ArrayList<>();
+        }
+        if (!watchList.contains(movieId)) {
             watchList.add(movieId);
             user.setWatchList(watchList);
             userRepository.save(user);
@@ -38,12 +39,25 @@ public class WatchlistService {
     }
 
     public List<Movie> getWatchlist(String userId) {
-        Optional<User> userOpt = userRepository.findById(new ObjectId(userId));
-        if (userOpt.isPresent()) {
-            return userOpt.get().getWatchList().stream()
-                    .map(movieId -> movieRepository.findMovieByImdbId(movieId).orElse(null))
-                    .collect(Collectors.toList());
-        }
-        return Collections.emptyList();
+        return userRepository.findById(new ObjectId(userId))
+                .map(user -> user.getWatchList().stream()
+                        .map(movieId -> movieRepository.findMovieByImdbId(movieId))
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
+
+    public boolean removeMovieFromWatchlist(String userId, String movieId) {
+        User user = userRepository.findById(new ObjectId(userId))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        List<String> watchList = user.getWatchList();
+        if (watchList != null && watchList.remove(movieId)) {
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+
 }
