@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+
 @RestController
 @RequestMapping("/api/v1/reviews")
 public class ReviewController {
@@ -24,7 +24,7 @@ public class ReviewController {
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Review> createReview(@RequestBody Map<String, String> payload){
         String reviewBody = payload.get("reviewBody");
-        int rating = Integer.parseInt(payload.get("rating"));  // Ensure that rating is passed as a string and convert it to an integer
+        int rating = Integer.parseInt(payload.get("rating"));
         String imdbId = payload.get("imdbId");
 
         Review review = reviewService.createReview(reviewBody, rating, imdbId);
