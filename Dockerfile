@@ -1,22 +1,11 @@
-# Используйте официальный образ OpenJDK для базового слоя
-FROM openjdk:17-jdk-slim as build
+# Использование базового образа с Java
+FROM openjdk:17
 
-# Установите рабочую директорию в контейнере
-WORKDIR /workspace/app
+# Указание рабочей директории в контейнере
+WORKDIR /app
 
-# Скопируйте Maven файлы проекта в контейнер
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
+# Копирование исполняемого файла jar в рабочую директорию
+COPY target/*.jar app.jar
 
-# Скопируйте исходные коды проекта
-COPY src src
-
-# Соберите приложение с помощью Maven и упакуйте его в JAR файл
-RUN ./mvnw install -DskipTests
-
-# Вторая стадия сборки для уменьшения размера образа
-FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY --from=build /workspace/app/target/*.jar app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+# Команда для запуска приложения
+CMD ["java", "-jar", "app.jar"]
