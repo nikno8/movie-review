@@ -44,7 +44,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://5.35.92.214:3000")); // Точно указываем домен, с которого разрешен доступ
+        configuration.setAllowedOrigins(Arrays.asList("http://147.45.246.162:3000")); // Точно указываем домен, с которого разрешен доступ
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PATCH", "HEAD", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Content-Type", "X-Requested-With", "Authorization", "Accept", "Origin"));

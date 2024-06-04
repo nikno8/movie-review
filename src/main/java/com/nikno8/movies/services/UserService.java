@@ -47,7 +47,7 @@ public class UserService {
         }
 
         User user = userMapper.signUpToUser(userDto);
-        user.setRole(Role.ADMIN);
+        user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.password())));
 
         User savedUser = userRepository.save(user);
